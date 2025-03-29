@@ -1,0 +1,1 @@
+export const constant = ["Terms of Service","Privacy Policy", "Cookie Policy", "Accessibility", "Ads info", "More"]

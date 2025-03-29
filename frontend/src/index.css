@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --border: #292828;
+  }
+}
+
+body {
+  @apply bg-background text-foreground;
+}
+
+@layer components {
+  .Layout {
+    @apply flex-1 max-sm:pr-5 max-sm:pl-2 max-md:px-10 max-lg:pr-20 lg:px-10 py-5
+  }
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+
+textarea {
+  transition: height 0.1s ease-out;
+}
+
+
+.ScrollBarNone::-webkit-scrollbar {
+  display: none;
+}
+
+.bg{
+  background: #5000f0;
+}
