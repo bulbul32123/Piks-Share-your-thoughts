@@ -111,22 +111,19 @@ export default function NavBar() {
             </span>
           </Link>
 
-          <div className="hidden w-1/2 md:flex items-center bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
-            <FaSearch className="text-gray-500 dark:text-gray-100" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="bg-transparent ml-2 w-full outline-none"
-            />
-          </div>
 
           {/* Mobile Search */}
 
           {/* Navigation Icons */}
           <div className="flex gap-1">
-            <span className="md:hidden text-2xl text-gray-600 p-2 hover:bg-gray-100 dark:text-gray-100 dark:hover:text-black rounded-xl cursor-pointer">
-              <FaSearch size={22} />
-            </span>
+            <div className="hidden md:flex items-center bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
+              <FaSearch className="text-gray-500 dark:text-gray-100" />
+              <input
+                type="text"
+                placeholder="Search"
+                className="bg-transparent ml-2 outline-none"
+              />
+            </div>
             {user && <div className="relative w-full h-full" ref={dropdownRef}>
               <button
                 onClick={toggleDropdown}

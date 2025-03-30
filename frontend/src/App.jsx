@@ -53,3 +53,9 @@ function App() {
 }
 
 export default App
+
+
+
+
+
+// Update the Profile page. add the side bars. make the project open source
