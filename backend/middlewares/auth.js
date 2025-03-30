@@ -4,8 +4,6 @@ const User = require('../models/User');
 // Protect routes - only authenticated users can access
 const protect = async (req, res, next) => {
   const { token } = req.cookies;
-  console.log(token);
-  // Check if token exists
   if (!token) {
     return res.status(401).json({ message: 'Not authorized to access this route' });
   }
