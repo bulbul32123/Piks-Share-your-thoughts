@@ -4,19 +4,11 @@ import { BsBookmarkFill } from "react-icons/bs";
 import { RiImageEditFill } from "react-icons/ri";
 import { LuLayoutList } from "react-icons/lu";
 import { useState } from "react";
-import axios from 'axios';
 import { Link } from "react-router-dom";
-import WritePostModal from "./WritePostModel/WritePostModal";
-import { useAuth } from "../context/AuthContext";
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY || import.meta.env.REACT_APP_OPENAI_API_KEY || ""; // Try both prefixes
-const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
-const OPENAI_MODEL = "gpt-3.5-turbo";
+import WritePostModal from "./WritePostModal";
 
-export default function LeftSidebar({isWritePostModalOpen,setIsWritePostModalOpen}) {
-  const [aiResponse, setAiResponse] = useState('');
-  const [isLoadingAiResponse, setIsLoadingAiResponse] = useState(false);
-  const [showAiResponse, setShowAiResponse] = useState(false);
-  const { user, loading } = useAuth();
+export default function LeftSidebar() {
+  const [isWritePostModalOpen, setIsWritePostModalOpen] = useState(false);
 
   const sidebarData = [
     {
@@ -45,48 +37,6 @@ export default function LeftSidebar({isWritePostModalOpen,setIsWritePostModalOpe
     },
   ]
 
-
-  const fetchAiResponse = async (question) => {
-    setIsLoadingAiResponse(true);
-    setShowAiResponse(true);
-
-    try {
-      if (!OPENAI_API_KEY) {
-        console.warn("No API Key found, using mock response");
-        return;
-      }
-
-      const response = await axios.post(
-        OPENAI_API_URL,
-        {
-          model: OPENAI_MODEL,
-          messages: [
-            { role: "system", content: "You are a helpful assistant. you are an information retrieval assistant. you are given a question and you need to answer it based on the information you have." },
-            { role: "user", content: question }
-          ],
-          max_tokens: 2048,
-          temperature: 0.7,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${OPENAI_API_KEY}`
-          }
-        }
-      );
-
-      const aiResponse = response.data.choices[0]?.message?.content || "No response received.";
-      console.log("ChatGPT Response:", aiResponse);
-
-      setAiResponse(aiResponse);
-    } catch (error) {
-      console.error("OpenAI API Error:", error);
-      setAiResponse("An error occurred while fetching the response.");
-    } finally {
-      setIsLoadingAiResponse(false);
-    }
-  };
-
   return (
     <>
       <div className="sticky top-[4rem] left-0 block border-r-[2px] max-sm:hidden dark:border-r-[#292828] z-[2] h-screen w-16 md:w-60 pb-2 pt-10 md:px-2.5 md:pr-2 bg-white dark:bg-black">
@@ -94,7 +44,7 @@ export default function LeftSidebar({isWritePostModalOpen,setIsWritePostModalOpe
           <div className="flex items-center gap-3">
             <img src="/pic.jpg" className="w-10 h-auto md:w-12 md:h-12 object-cover rounded-full object-center" alt="" />
             <div>
-              <p className="font-medium hover:underline max-md:hidden">{user?.name ? user.name : "Guest Mode"}</p>
+              <p className="font-medium hover:underline max-md:hidden">John Doe</p>
             </div>
           </div>
         </Link>
@@ -128,13 +78,6 @@ export default function LeftSidebar({isWritePostModalOpen,setIsWritePostModalOpe
       </div>
       {/* Post Modal */}
       <WritePostModal
-        aiResponse={aiResponse}
-        setAiResponse={setAiResponse}
-        setShowAiResponse={setShowAiResponse}
-        isLoadingAiResponse={isLoadingAiResponse}
-        showAiResponse={showAiResponse}
-        fetchAiResponse={fetchAiResponse}
-        setIsWritePostModalOpen={setIsWritePostModalOpen}
         isOpen={isWritePostModalOpen}
         onClose={() => setIsWritePostModalOpen(false)}
       />

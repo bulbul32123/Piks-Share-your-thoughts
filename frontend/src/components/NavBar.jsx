@@ -1,5 +1,6 @@
 import { FaSearch, FaUser, FaBell } from 'react-icons/fa';
 import { useState, useEffect, useRef } from 'react';
+
 import { MdSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -7,14 +8,12 @@ import Logo from './Logo';
 import MobileNavResponsive from './MobileNavResponsive';
 import NotificationDropdown from './NotificationDropdown';
 import { BsBellFill } from 'react-icons/bs';
-import { useAuth } from '../context/AuthContext';
 
 export default function NavBar() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
   const dropdownRef = useRef(null);
-  const { user, loading, logout } = useAuth();
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -110,13 +109,14 @@ export default function NavBar() {
               <Logo dark={isDarkMode} />
             </span>
           </Link>
-
-
           {/* Mobile Search */}
 
           {/* Navigation Icons */}
-          <div className="flex gap-1">
-            <div className="hidden md:flex items-center bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
+          <div className="flex gap-2">
+            <span className="md:hidden text-2xl text-gray-600 p-2 hover:bg-gray-100 dark:text-gray-100 dark:hover:text-black rounded-xl cursor-pointer">
+              <FaSearch size={22} />
+            </span>
+            <div className="hidden  md:flex items-center bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
               <FaSearch className="text-gray-500 dark:text-gray-100" />
               <input
                 type="text"
@@ -124,7 +124,7 @@ export default function NavBar() {
                 className="bg-transparent ml-2 outline-none"
               />
             </div>
-            {user && <div className="relative w-full h-full" ref={dropdownRef}>
+            <div className="relative w-full h-full" ref={dropdownRef}>
               <button
                 onClick={toggleDropdown}
                 className="text-2xl text-gray-600 p-2 hover:bg-gray-100 dark:text-gray-100 dark:hover:text-black rounded-xl cursor-pointer"
@@ -138,9 +138,9 @@ export default function NavBar() {
                 )}
               </button>
               <NotificationDropdown setIsOpen={setIsOpen} isOpen={isOpen} toggleDropdown={toggleDropdown} notifications={notifications} setNotifications={setNotifications} unreadCount={unreadCount} />
-            </div>}
+            </div>
             {isDarkMode ? (
-              <span onClick={toggleDarkMode} className="text-2xl dark:hover:text-black text-black dark:text-gray-100 p-2 hover:bg-gray-100 rounded-xl cursor-pointer">
+              <span onClick={toggleDarkMode} className="text-2xl dark:hover:text-black text-gray-600 dark:text-gray-100 p-2 hover:bg-gray-100 rounded-xl cursor-pointer">
                 <FaMoon size={22} />
               </span>
             ) : (
@@ -148,21 +148,13 @@ export default function NavBar() {
                 <MdSunny size={22} />
               </span>
             )}
-            {user ? <button onClick={() => setShowMobileNav(true)} className="text-2xl text-gray-600 dark:text-gray-100 p-2 hover:bg-gray-100 dark:hover:text-black rounded-xl cursor-pointer">
+            <button onClick={() => setShowMobileNav(true)} className="text-2xl text-gray-600 dark:text-gray-100 p-2 hover:bg-gray-100 dark:hover:text-black rounded-xl cursor-pointer">
               <FaUser size={22} />
-            </button> : <div className='flex gap-2 items-center'>
-              <Link to='/login' style={{ padding: "0.3rem 1rem" }} className="text-white bg-black dark:text-gray-100 p-2 ml-1.5 hover:bg-gray-900  select-none rounded-[0.2rem] cursor-pointer">
-                Login
-              </Link>
-              <Link to='/signup' style={{ padding: "0.3rem 1rem" }} className="dark:text-black dark:hover:bg-gray-200 select-none  bg-transparent text-black hover:bg-gray-100 dark:bg-gray-100 rounded-[0.2rem] cursor-pointer">
-                Signup
-              </Link>
-            </div>
-            }
+            </button>
           </div>
         </div>
       </header>
-      {user && <MobileNavResponsive user={user} setShowMobileNav={setShowMobileNav} showMobileNav={showMobileNav} toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} logout={logout} />}
+      <MobileNavResponsive setShowMobileNav={setShowMobileNav} showMobileNav={showMobileNav} toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
     </>
   );
 }

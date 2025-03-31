@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import LeftSidebar from '../components/LeftSideBar';
 import PostCard from '../components/PostCard';
-import RightSidebar from '../components/RightSideBar';
 
-export default function HomePage({ isWritePostModalOpen, setIsWritePostModalOpen }) {
+export default function HomePage({setIsWritePostModalOpen }) {
 
     const [posts, setPosts] = useState([]);
 
@@ -19,8 +17,6 @@ export default function HomePage({ isWritePostModalOpen, setIsWritePostModalOpen
   
 
     return (
-     <div className="flex w-full h-full relative">
-            <LeftSidebar isWritePostModalOpen={isWritePostModalOpen} setIsWritePostModalOpen={setIsWritePostModalOpen} />
             <div className="h-full w-full bg-transparent Layout">
                 <div className="flex gap-4 items-center w-full dark:bg-[#1a1a1a] pb-7 pt-2">
                     <div className="">
@@ -41,7 +37,5 @@ export default function HomePage({ isWritePostModalOpen, setIsWritePostModalOpen
                     ))}
                 </div>
             </div>
-            <RightSidebar />
-        </div>
     );
 }

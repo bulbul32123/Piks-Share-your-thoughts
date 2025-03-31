@@ -1,20 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
+import PostCard from "../components/PostCard";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("Posts");
   const tabs = ["Posts", "Media", "Replies", "Likes"];
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch('http://localhost:5000/api/users');
+      const data = await response.json();
+      setPosts(data);
+    };
+    fetchPosts();
+  }, []);
+
 
   return (
-    <div className="mx-auto border-gray-300 h-full w-full pl-16 pr-16">
+    <div className="mx-auto border-gray-300 h-full w-full">
       {/* Header */}
-      <div className="flex items-center gap-4 px-4 py-3 border-b border-gray-300">
-        <IoMdArrowBack className="text-xl cursor-pointer" />
-      </div>
+      <button className="py-2 pr-2 flex gap-1 items-center ">
+        <IoMdArrowBack className="text-xl" /> back
+      </button>
 
       {/* Profile Banner */}
-      <div className="relative w-full h-48 bg-gray-200">
+      <div className="relative w-full h-48 bg-gray-200 rounded-sm">
         <div className="absolute -bottom-14 left-4 w-24 h-24 bg-white rounded-full flex items-center justify-center border-4 border-white">
           <FaUserCircle className="text-gray-400 text-6xl" />
         </div>
@@ -49,8 +61,10 @@ export default function ProfilePage() {
       </div>
 
       {/* Tab Content */}
-      <div className="p-4 0 text-center">
-        {activeTab === "Posts" && <p className="text-gray-500 dark:text-gray-300" >User&apos;s posts will appear here.</p>}
+      <div className="py-4">
+        {activeTab === "Posts" && posts.slice(0, 3).map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
         {activeTab === "Replies" && <p className="text-gray-500 dark:text-gray-300">User&apos;s replies will appear here.</p>}
         {activeTab === "Media" && <p className="text-gray-500 dark:text-gray-300">User&apos;s media posts will appear here.</p>}
         {activeTab === "Likes" && <p className="text-gray-500 dark:text-gray-300">User&apos;s liked posts will appear here.</p>}
