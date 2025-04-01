@@ -17,7 +17,7 @@ export default function HomePage({setIsWritePostModalOpen }) {
   
 
     return (
-            <div className="h-full w-full bg-transparent Layout">
+            <div className="h-full w-full bg-transparent">
                 <div className="flex gap-4 items-center w-full dark:bg-[#1a1a1a] pb-7 pt-2">
                     <div className="">
                         <img src="/pic.jpg" alt="logo" className="w-10 h-10 rounded-full" />

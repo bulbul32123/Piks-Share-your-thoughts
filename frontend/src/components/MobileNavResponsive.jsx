@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaBell, FaHistory, FaUserAstronaut, FaUserFriends } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
@@ -9,9 +8,7 @@ import { LuLayoutList } from 'react-icons/lu';
 import { BsBookmarkFill } from 'react-icons/bs';
 import { constant } from '../utils/constant';
 
-
-export default function MobileNavResponsive({ user, setShowMobileNav, showMobileNav, toggleDarkMode, isDarkMode, logout }) {
-
+export default function MobileNavResponsive({ setShowMobileNav, showMobileNav, toggleDarkMode, isDarkMode, logout, user }) {
     const userImg = false
     const sidebarData = [
         {
@@ -39,6 +36,7 @@ export default function MobileNavResponsive({ user, setShowMobileNav, showMobile
             link: "history"
         },
     ]
+
     return (
         <>
             {showMobileNav && (

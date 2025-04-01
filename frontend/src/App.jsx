@@ -13,13 +13,15 @@ import { Toaster } from 'react-hot-toast';
 import LeftSidebar from './components/LeftSideBar';
 import RightSidebar from './components/RightSidebar';
 import Layout from './components/Layout';
+import { useAuth } from './context/AuthContext';
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isWritePostModalOpen, setIsWritePostModalOpen] = useState(false);
   const location = useLocation();
-  const hideNavbarFooter = location.pathname === '/login';
+  const { user, logout } = useAuth();
+  const hideNavbarFooter = location.pathname === '/login' || location.pathname === '/signup';
 
   useEffect(() => {
     const handleLoad = () => {
@@ -37,9 +39,9 @@ function App() {
     <div className="h-full w-full duration-100 ease-linear">
       <Toaster position="top-right" reverseOrder={false} />
       {loading && <Loading />}
-      <NavBar />
+      <NavBar user={user} logout={logout} />
       <div className="flex w-full h-full relative">
-        {!hideNavbarFooter && <LeftSidebar isWritePostModalOpen={isWritePostModalOpen} setIsWritePostModalOpen={setIsWritePostModalOpen} />}
+        {!hideNavbarFooter && <LeftSidebar isWritePostModalOpen={isWritePostModalOpen} setIsWritePostModalOpen={setIsWritePostModalOpen} user={user}/>}
         <Layout>
           <Routes>
             <Route path="/" element={<HomePage isWritePostModalOpen={isWritePostModalOpen} setIsWritePostModalOpen={setIsWritePostModalOpen} />} />

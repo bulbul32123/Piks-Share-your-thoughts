@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import WritePostModal from "./WritePostModal";
 
-export default function LeftSidebar() {
+export default function LeftSidebar({ user }) {
   const [isWritePostModalOpen, setIsWritePostModalOpen] = useState(false);
 
   const sidebarData = [
@@ -44,7 +44,7 @@ export default function LeftSidebar() {
           <div className="flex items-center gap-3">
             <img src="/pic.jpg" className="w-10 h-auto md:w-12 md:h-12 object-cover rounded-full object-center" alt="" />
             <div>
-              <p className="font-medium hover:underline max-md:hidden">John Doe</p>
+              <p className="font-medium hover:underline max-md:hidden">{user?.name ? user.name : 'Guest'}</p>
             </div>
           </div>
         </Link>

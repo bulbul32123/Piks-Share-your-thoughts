@@ -9,7 +9,7 @@ import MobileNavResponsive from './MobileNavResponsive';
 import NotificationDropdown from './NotificationDropdown';
 import { BsBellFill } from 'react-icons/bs';
 
-export default function NavBar() {
+export default function NavBar({ user, logout }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -103,7 +103,7 @@ export default function NavBar() {
   return (
     <>
       <header className="w-full bg-white dark:bg-black shadow-sm sticky  top-0 pl-4 z-[4] pr-4 border-b-[2px] dark:border-b-[#292828]">
-        <div className="flex items-center justify-between py-2.5">
+        <div className="flex items-center justify-between py-2">
           <Link to='/' className="flex items-center gap-2 ">
             <span className='h-12'>
               <Logo dark={isDarkMode} />
@@ -124,21 +124,23 @@ export default function NavBar() {
                 className="bg-transparent ml-2 outline-none"
               />
             </div>
-            <div className="relative w-full h-full" ref={dropdownRef}>
-              <button
-                onClick={toggleDropdown}
-                className="text-2xl text-gray-600 p-2 hover:bg-gray-100 dark:text-gray-100 dark:hover:text-black rounded-xl cursor-pointer"
-                aria-label="Notifications"
-              >
-                {unreadCount > 0 ? <BsBellFill size={22} /> : <FaBell size={22} />}
-                {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                    {unreadCount > 9 ? '9+' : unreadCount}
-                  </span>
-                )}
-              </button>
-              <NotificationDropdown setIsOpen={setIsOpen} isOpen={isOpen} toggleDropdown={toggleDropdown} notifications={notifications} setNotifications={setNotifications} unreadCount={unreadCount} />
-            </div>
+            {user &&
+              <div className="relative w-full h-full" ref={dropdownRef}>
+                <button
+                  onClick={toggleDropdown}
+                  className="text-2xl text-gray-600 p-2 hover:bg-gray-100 dark:text-gray-100 dark:hover:text-black rounded-xl cursor-pointer"
+                  aria-label="Notifications"
+                >
+                  {unreadCount > 0 ? <BsBellFill size={22} /> : <FaBell size={22} />}
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
+                  )}
+                </button>
+                <NotificationDropdown setIsOpen={setIsOpen} isOpen={isOpen} toggleDropdown={toggleDropdown} notifications={notifications} setNotifications={setNotifications} unreadCount={unreadCount} />
+              </div>
+            }
             {isDarkMode ? (
               <span onClick={toggleDarkMode} className="text-2xl dark:hover:text-black text-gray-600 dark:text-gray-100 p-2 hover:bg-gray-100 rounded-xl cursor-pointer">
                 <FaMoon size={22} />
@@ -148,13 +150,24 @@ export default function NavBar() {
                 <MdSunny size={22} />
               </span>
             )}
-            <button onClick={() => setShowMobileNav(true)} className="text-2xl text-gray-600 dark:text-gray-100 p-2 hover:bg-gray-100 dark:hover:text-black rounded-xl cursor-pointer">
-              <FaUser size={22} />
-            </button>
+            {user ? (
+              <button onClick={() => setShowMobileNav(true)} className="text-2xl text-gray-600 dark:text-gray-100 p-2 hover:bg-gray-100 dark:hover:text-black rounded-xl cursor-pointer">
+                <FaUser size={22} />
+              </button>
+            ) : (
+              <div className="flex justify-center items-center gap-1">
+                <Link to='/login' className="bg-black text-white dark:text-gray-100 hover:bg-dark py-1.5 px-4 dark:hover:text-white dark:hover:bg-dark rounded-sm cursor-pointer">
+                  Login
+                </Link>
+                <Link to='/signup' className=" py-1.5 px-4 text-black dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 dark:text-black rounded-sm cursor-pointer">
+                  Signup
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </header>
-      <MobileNavResponsive setShowMobileNav={setShowMobileNav} showMobileNav={showMobileNav} toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+      <MobileNavResponsive setShowMobileNav={setShowMobileNav} showMobileNav={showMobileNav} toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} user={user} logout={logout} />
     </>
   );
 }

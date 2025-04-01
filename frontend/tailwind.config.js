@@ -11,6 +11,9 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				border: 'hsl(var(--border))',
+				dark: '#2d2c2c',
+				light: '#f9fafb',
+				primary: '#000000',
 			}
 		}
 	},

@@ -54,7 +54,6 @@ const WritePostModal = ({ isOpen, onClose }) => {
     { text: "#FFFFFF", color: "#2C3E50", status: "😨 Fearful", label: "Dark Gray" },
     { text: "#000000", color: "#E9F3FF", status: "Sad 😢", label: "Blue" },
   ];
-  console.log(selectedBgColor);
 
   // Preview images
   const filePreviewUrls = selectedFiles.map(file => URL.createObjectURL(file));
@@ -88,7 +87,6 @@ const WritePostModal = ({ isOpen, onClose }) => {
       response = `I've analyzed your question about "${question}" and here's what I found: This is a fascinating topic! Based on current research, there are multiple perspectives to consider. Some experts suggest approaching it by first understanding the fundamentals, while others recommend a more practical approach.`;
     }
 
-    console.log("Using mock response:", response);
     return response;
   };
 
@@ -223,7 +221,6 @@ const WritePostModal = ({ isOpen, onClose }) => {
   // Add a debounced version of checkForAiCommand
   const debouncedCheckForAiCommand = useCallback(
     (text) => {
-      console.log("Checking for AI command in:", text);
       const aiCommandRegex = /#Ai\s+(.+)/i;
       const match = text.match(aiCommandRegex);
 
