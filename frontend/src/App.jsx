@@ -44,7 +44,7 @@ function App() {
         {!hideNavbarFooter && <LeftSidebar isWritePostModalOpen={isWritePostModalOpen} setIsWritePostModalOpen={setIsWritePostModalOpen} user={user}/>}
         <Layout>
           <Routes>
-            <Route path="/" element={<HomePage isWritePostModalOpen={isWritePostModalOpen} setIsWritePostModalOpen={setIsWritePostModalOpen} />} />
+            <Route path="/" element={<HomePage setIsWritePostModalOpen={setIsWritePostModalOpen} />} />
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/signup" element={<SignUp />} />

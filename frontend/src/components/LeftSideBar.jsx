@@ -3,12 +3,10 @@ import { FaHistory } from "react-icons/fa";
 import { BsBookmarkFill } from "react-icons/bs";
 import { RiImageEditFill } from "react-icons/ri";
 import { LuLayoutList } from "react-icons/lu";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import WritePostModal from "./WritePostModal";
+import WritePostModal from './WritePostModel/WritePostModal'
 
-export default function LeftSidebar({ user }) {
-  const [isWritePostModalOpen, setIsWritePostModalOpen] = useState(false);
+export default function LeftSidebar({ user,isWritePostModalOpen, setIsWritePostModalOpen }) {
 
   const sidebarData = [
     {
