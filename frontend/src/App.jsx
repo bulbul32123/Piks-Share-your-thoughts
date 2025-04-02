@@ -46,7 +46,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage setIsWritePostModalOpen={setIsWritePostModalOpen} />} />
             <Route path="/notifications" element={<NotificationPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile" element={<ProfilePage user={user}/>} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/post/:id" element={<PostDetail />} />

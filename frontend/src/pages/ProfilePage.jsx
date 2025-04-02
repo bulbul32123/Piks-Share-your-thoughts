@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
 import PostCard from "../components/PostCard";
+import ProfileEdit from "../components/profileEdit/ProfileEdit";
+import { useClickOutside } from "../hooks/useClickOutside";
 
-export default function ProfilePage() {
+export default function ProfilePage({ user }) {
   const [activeTab, setActiveTab] = useState("Posts");
   const tabs = ["Posts", "Media", "Replies", "Likes"];
+  const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -19,7 +22,7 @@ export default function ProfilePage() {
 
 
   return (
-    <div className="mx-auto border-gray-300 h-full w-full">
+    <div className="border-gray-300 h-full w-full relative">
       {/* Header */}
       <button className="py-2 pr-2 flex gap-1 items-center ">
         <IoMdArrowBack className="text-xl" /> back
@@ -35,9 +38,9 @@ export default function ProfilePage() {
       {/* Profile Info */}
       <div className="px-4 pb-4 border-b border-gray-300 mt-5">
         <div className="flex justify-end">
-          <button className="px-4 py-2 border bg-black text-white border-gray-400 rounded-full text-sm font-medium hover:bg-gray-800 dark:text-black dark:bg-white hover:dark:bg-gray-200 dark:border-black">Edit Profile</button>
+          <button className="px-4 py-2 border bg-black text-white border-gray-400 rounded-full text-sm font-medium hover:bg-gray-800 dark:text-black dark:bg-white hover:dark:bg-gray-200 dark:border-black" onClick={() => setIsEditProfileModalOpen(true)}>Edit Profile</button>
         </div>
-        <h2 className="text-xl font-bold dark:text-white text-black">John Doe</h2>
+        <h2 className="text-xl font-bold dark:text-white text-black">{user?.name ? user.name : "Guest"}</h2>
         <p className="text-gray-500 dark:text-white">@johndoe</p>
         <p className="text-gray-600 dark:text-white mt-2">Frontend Developer | Tech Enthusiast</p>
         <div className="mt-2 flex gap-4 text-gray-600 dark:text-gray-300 text-sm">
@@ -69,6 +72,8 @@ export default function ProfilePage() {
         {activeTab === "Media" && <p className="text-gray-500 dark:text-gray-300">User&apos;s media posts will appear here.</p>}
         {activeTab === "Likes" && <p className="text-gray-500 dark:text-gray-300">User&apos;s liked posts will appear here.</p>}
       </div>
+      {isEditProfileModalOpen &&
+        <ProfileEdit setIsEditProfileModalOpen={setIsEditProfileModalOpen} isEditProfileModalOpen={isEditProfileModalOpen} />}
     </div>
   );
 }

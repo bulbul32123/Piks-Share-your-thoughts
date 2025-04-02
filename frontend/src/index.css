@@ -47,3 +47,7 @@ textarea {
 .bg{
   background: #5000f0;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
