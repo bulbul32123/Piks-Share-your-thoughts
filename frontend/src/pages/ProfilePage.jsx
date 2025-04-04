@@ -3,7 +3,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
 import PostCard from "../components/PostCard";
 import ProfileEdit from "../components/profileEdit/ProfileEdit";
-import { useClickOutside } from "../hooks/useClickOutside";
 
 export default function ProfilePage({ user }) {
   const [activeTab, setActiveTab] = useState("Posts");

@@ -245,8 +245,8 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
   usePreventScroll(isOpen)
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 overflow-hidden ">
-      <div className="bg-white relative dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-xl max-h-[80vh] flex flex-col animate-scale-in my-8" ref={ref}>
+    <div className="fixed inset-0 bg-gray-500/40 flex items-center justify-center z-50 p-4 overflow-hidden ">
+      <div className="bg-white relative dark:bg-black rounded-xl shadow-xl w-full max-w-xl max-h-[80vh] flex flex-col animate-scale-in my-8" ref={ref}>
         {/* Header */}
         <PostModelHeader onClose={onClose} />
 
@@ -303,7 +303,7 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
                   value={postText}
                   onKeyDown={handleKeyDown}
                   onChange={(e) => setPostText(e.target.value)}
-                  className={`w-full border-none outline-none resize-none ${selectedBgColor.color ? 'bg-transparent' : 'dark:bg-gray-800'
+                  className={`w-full border-none outline-none resize-none ${selectedBgColor.color ? 'bg-transparent' : 'dark:bg-black'
                     } dark:text-white`}
                   maxLength={MAX_CHARS}
                   style={{ minHeight: '50px', overflow: 'hidden', color: selectedBgColor.text }}

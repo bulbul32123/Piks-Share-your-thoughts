@@ -14,6 +14,9 @@ import LeftSidebar from './components/LeftSideBar';
 import RightSidebar from './components/RightSidebar';
 import Layout from './components/Layout';
 import { useAuth } from './context/AuthContext';
+import AllActivities from './pages/AllActivities';
+import Saves from './pages/Saves';
+import Friends from './pages/Friends';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -35,6 +38,8 @@ function App() {
       return () => window.removeEventListener("load", handleLoad);
     }
   }, []);
+  console.log("calling from app");
+  
   return (
     <div className="h-full w-full duration-100 ease-linear">
       <Toaster position="top-right" reverseOrder={false} />
@@ -45,8 +50,11 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<HomePage setIsWritePostModalOpen={setIsWritePostModalOpen} />} />
-            <Route path="/notifications" element={<NotificationPage />} />
-            <Route path="/profile" element={<ProfilePage user={user}/>} />
+            <Route path="/:user/notifications" element={<NotificationPage />} />
+            <Route path="/:user/profile" element={<ProfilePage user={user}/>} />
+            <Route path="/:user/recent-activities/:type" element={<AllActivities />} />
+            <Route path="/:user/saves" element={<Saves />} />
+            <Route path="/:user/friends" element={<Friends />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/post/:id" element={<PostDetail />} />

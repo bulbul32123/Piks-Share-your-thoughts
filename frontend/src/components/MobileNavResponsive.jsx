@@ -1,41 +1,15 @@
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { FaBell, FaHistory, FaUserAstronaut, FaUserFriends } from "react-icons/fa";
+import { FaBell, FaUserAstronaut } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import { MdSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa";
-import { LuLayoutList } from 'react-icons/lu';
-import { BsBookmarkFill } from 'react-icons/bs';
 import { constant } from '../utils/constant';
+import { sidebarData } from "../utils/sidebarData";
 
 export default function MobileNavResponsive({ setShowMobileNav, showMobileNav, toggleDarkMode, isDarkMode, logout, user }) {
     const userImg = false
-    const sidebarData = [
-        {
-            id: 1,
-            name: "Friends",
-            icon: <FaUserFriends size={27} />,
-            link: "friends"
-        },
-        {
-            id: 2,
-            name: "Saves",
-            icon: <BsBookmarkFill size={27} />,
-            link: "saves"
-        },
-        {
-            id: 3,
-            name: "My Posts",
-            icon: <LuLayoutList size={27} />,
-            link: "myposts"
-        },
-        {
-            id: 4,
-            name: "History",
-            icon: <FaHistory size={27} />,
-            link: "history"
-        },
-    ]
+    const UserName = user?.name && user?.name.toLowerCase().replace(/\s+/g, "-")
 
     return (
         <>
@@ -52,14 +26,14 @@ export default function MobileNavResponsive({ setShowMobileNav, showMobileNav, t
                                 <div className="w-full flex mt-5">
                                     <div className="flex text-xl flex-col gap-5 w-full" >
 
-                                        <Link to='/profile' className='flex justify-between items-center gap-2 hover:underline pb-4' onClick={() => setShowMobileNav(false)}>
+                                        <Link to={user ? `/${UserName}/profile` : '/login'} className='flex justify-between items-center gap-2 hover:underline pb-4' onClick={() => setShowMobileNav(false)}>
                                             <div className="flex items-center gap-3">
                                                 {userImg ? "User Img" : <FaUserAstronaut size={23} />}
                                                 <p className='max-md:text-lg'>Hi, {user?.name ? user.name : "Guest"}</p>
                                             </div>
                                             <span><MdKeyboardArrowRight size={25} /></span>
                                         </Link>
-                                        <Link to="/notifications" onClick={() => setShowMobileNav(false)} className='flex justify-between items-center gap-2 hover:underline ' >
+                                        <Link to={user ? `/${UserName}/notifications` : '/login'} onClick={() => setShowMobileNav(false)} className='flex justify-between items-center gap-2 hover:underline ' >
                                             <div className="flex gap-2 items-center">
                                                 <FaBell size={25} />
                                                 <p className='max-md:text-base'>Notifications (2)</p>
@@ -69,7 +43,7 @@ export default function MobileNavResponsive({ setShowMobileNav, showMobileNav, t
 
                                         <hr className='mb-3' />
                                         {sidebarData.map((item) => (
-                                            <Link href={`/${item.link}`} onClick={() => setShowMobileNav(false)} className='flex gap-3 my-2 items-center hover:underline text-base md:text-lg font-medium' key={item.id}>
+                                            <Link to={user ? `/${UserName}/${item.link}` : '/login'} onClick={() => setShowMobileNav(false)} className='flex gap-3 my-2 items-center hover:underline text-base md:text-lg font-medium' key={item.id}>
                                                 {item.icon}
                                                 <p className=''>{item.name}</p>
                                             </Link>

@@ -1,44 +1,16 @@
-import { FaUserFriends } from "react-icons/fa";
-import { FaHistory } from "react-icons/fa";
-import { BsBookmarkFill } from "react-icons/bs";
 import { RiImageEditFill } from "react-icons/ri";
-import { LuLayoutList } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import WritePostModal from './WritePostModel/WritePostModal'
+import { sidebarData } from "../utils/sidebarData";
 
-export default function LeftSidebar({ user,isWritePostModalOpen, setIsWritePostModalOpen }) {
+export default function LeftSidebar({ user, isWritePostModalOpen, setIsWritePostModalOpen }) {
 
-  const sidebarData = [
-    {
-      id: 1,
-      name: "Friends",
-      icon: <FaUserFriends size={27} />,
-      link: "friends"
-    },
-    {
-      id: 2,
-      name: "Saves",
-      icon: <BsBookmarkFill size={27} />,
-      link: "saves"
-    },
-    {
-      id: 3,
-      name: "My Posts",
-      icon: <LuLayoutList size={27} />,
-      link: "myposts"
-    },
-    {
-      id: 4,
-      name: "History",
-      icon: <FaHistory size={27} />,
-      link: "history"
-    },
-  ]
+  const UserName = user?.name && user?.name.toLowerCase().replace(/\s+/g, "-")
 
   return (
     <>
       <div className="sticky top-[4rem] left-0 block border-r-[2px] max-sm:hidden dark:border-r-[#292828] z-[2] h-screen w-16 md:w-60 pb-2 pt-10 md:px-2.5 md:pr-2 bg-white dark:bg-black">
-        <Link to="/profile" className="mb-3 px-3 block">
+        <Link to={user ? `/${UserName}/profile` : '/login'} className="mb-3 px-3 block">
           <div className="flex items-center gap-3">
             <img src="/pic.jpg" className="w-10 h-auto md:w-12 md:h-12 object-cover rounded-full object-center" alt="" />
             <div>
@@ -47,9 +19,9 @@ export default function LeftSidebar({ user,isWritePostModalOpen, setIsWritePostM
           </div>
         </Link>
         <div className="flex gap-2 flex-col  pb-4 mx-auto">
-          {sidebarData.map((link) => (
 
-            <Link to={`/${link.link}`} className="py-1 md:py-4 md:hover:bg-gray-100 md:dark:hover:bg-[#1a1a1a] px-3 block rounded-r-xl" key={link.id}>
+          {sidebarData.map((link) => (
+            <Link to={user ? `/${UserName}/${link.link}` : '/login'} className="py-1 md:py-4 md:hover:bg-gray-100 md:dark:hover:bg-[#1a1a1a] px-3 block rounded-r-xl" key={link.id}>
               <div className="flex items-center gap-3 mx-auto">
                 <span className="max-md:bg-white max-md:hover:bg-gray-100 dark:bg-black  max-md:dark:hover:bg-[#1a1a1a] max-md:dark:text-white max-md:text-black max-md:pl-2 max-md:p-3 max-md:text-sm max-md:rounded-xl">{link.icon}</span>
                 <div>
