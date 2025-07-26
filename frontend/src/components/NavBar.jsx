@@ -1,6 +1,5 @@
 import { FaSearch, FaUser, FaBell } from 'react-icons/fa';
 import { useState, useEffect, useRef } from 'react';
-
 import { MdSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -81,7 +80,6 @@ export default function NavBar({ user, logout }) {
   };
 
   const unreadCount = notifications.filter(notification => !notification.isRead).length;
-  // Initialize dark mode state based on localStorage value
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {

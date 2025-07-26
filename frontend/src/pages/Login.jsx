@@ -39,7 +39,6 @@ export default function Login() {
 
         try {
             await login(email, password);
-            // Redirect is handled in the login function
         } catch (error) {
             console.error('Login error:', error);
         }
@@ -60,7 +59,6 @@ export default function Login() {
 
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="space-y-4">
-                        {/* Email Field */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-white ">
                                 Email address
@@ -86,7 +84,6 @@ export default function Login() {
                             )}
                         </div>
 
-                        {/* Password Field */}
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-white">
                                 Password

@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 export const shopList = {
     title: "Shop By",
     lists: [

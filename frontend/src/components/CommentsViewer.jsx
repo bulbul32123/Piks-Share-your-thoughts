@@ -156,7 +156,7 @@ export default function CommentsViewer({ post, isLike, setIsLike, isSave, setIsS
             },],
             postimg: "/postimg5.jpg",
         },
-        // Add more comments as needed
+  
     ];
 
 
@@ -166,12 +166,11 @@ export default function CommentsViewer({ post, isLike, setIsLike, isSave, setIsS
         { id: 3, label: 'Oldest First' }
     ];
 
-    // Auto-resize textarea
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
         if (textarea) {
             textarea.style.height = 'auto';
-            textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`; // Max height of 200px
+            textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`; 
         }
     };
 
@@ -183,10 +182,8 @@ export default function CommentsViewer({ post, isLike, setIsLike, isSave, setIsS
     const handleCommentSubmit = (e) => {
         e.preventDefault();
         if (comment.trim()) {
-            // Handle comment submission here
             console.log('Comment submitted:', comment);
             setComment('');
-            // Reset textarea height
             if (textareaRef.current) {
                 textareaRef.current.style.height = 'auto';
             }
@@ -196,7 +193,7 @@ export default function CommentsViewer({ post, isLike, setIsLike, isSave, setIsS
     useEffect(() => {
         function handleClickOutside(event) {
             if (isShareModalOpen) {
-                return; // Don't handle CommentViewer clicks when ShareModal is open
+                return;
             }
             if (commentViewerRef.current &&
                 !commentViewerRef.current.contains(event.target)) {
@@ -211,25 +208,21 @@ export default function CommentsViewer({ post, isLike, setIsLike, isSave, setIsS
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isCommentsViewerOpen, setIsCommentsViewerOpen, isShareModalOpen]);
 
-    // Handle clicking outside emoji picker
 
     return (
         <div className={`relative z-10 ${isCommentsViewerOpen ? 'block' : 'hidden'}`}>
-            {/* Overlay - Outside the ref */}
             <div
                 className="fixed inset-0 z-[10] bg-gray-500/75 transition-opacity"
                 onClick={(e) => {
                     e.stopPropagation();
-                    if (!isShareModalOpen) { // Only close if ShareModal is not open
+                    if (!isShareModalOpen) {
                         setIsCommentsViewerOpen(false);
                     }
                 }}
             ></div>
 
-            {/* Content Container */}
             <div className="fixed left-0 z-[11] top-0 w-full h-full">
                 <div className="flex justify-center items-center h-full py-6">
-                    {/* Comment Viewer Content - Apply ref here */}
                     <div
                         ref={commentViewerRef}
                         className="w-full md:w-[40rem] bg-white dark:bg-black h-full pt-6 pb-40 rounded-xl relative"
@@ -269,12 +262,3 @@ export default function CommentsViewer({ post, isLike, setIsLike, isSave, setIsS
         </div>
     )
 }
-
-
-
-// Comment Section of the post detail
-
-
-
-
-

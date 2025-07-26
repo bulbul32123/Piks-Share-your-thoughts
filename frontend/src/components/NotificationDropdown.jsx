@@ -7,7 +7,6 @@ const NotificationDropdown = ({ isOpen, notifications, setNotifications, unreadC
     const [filter, setFilter] = useState('all');
     const [timeFrame, setTimeFrame] = useState('all');
 
-    // Categories for filtering
     const categories = [
         { id: 'all', label: 'All' },
         { id: 'comment', label: 'Comments', icon: <FiMessageSquare className="text-green-500" /> },
@@ -15,30 +14,25 @@ const NotificationDropdown = ({ isOpen, notifications, setNotifications, unreadC
         { id: 'follow', label: 'Follows', icon: <FiUserPlus className="text-blue-500" /> }
     ];
 
-    // Time frames for filtering
     const timeFrames = [
         { id: 'all', label: 'All time' },
         { id: 'today', label: 'Today' },
         { id: 'week', label: 'This week' }
     ];
 
-    // Categorize notifications (in a real app, this would come from the backend)
     const categorizedNotifications = notifications.map(notification => {
         let category = 'comment';
         let priority = 'normal';
 
-        // Determine category based on title
         if (notification.title.includes('liked')) category = 'like';
         if (notification.title.includes('follower')) category = 'follow';
 
-        // Set priority for demo (in a real app this would be data-driven)
         if (notification.id === 1) priority = 'high';
         if (notification.id === 5) priority = 'low';
 
         return { ...notification, category, priority };
     });
 
-    // Filter by category and time frame
     const filteredNotifications = categorizedNotifications
         .filter(notification => filter === 'all' || notification.category === filter)
         .filter(notification => {
@@ -61,8 +55,6 @@ const NotificationDropdown = ({ isOpen, notifications, setNotifications, unreadC
     const snoozeNotification = (e, id) => {
         e.preventDefault();
         e.stopPropagation();
-        // In a real app, this would update the backend
-        // For demo, we'll just mark it as read
         markAsRead(id);
     };
 
@@ -90,7 +82,6 @@ const NotificationDropdown = ({ isOpen, notifications, setNotifications, unreadC
 
     return (
         <div className="absolute right-0 mt-2 w-96 bg-white dark:bg-[#1a1a1a] rounded-lg shadow-xl border dark:border-gray-700 overflow-hidden">
-            {/* Header with title and actions */}
             <div className="flex justify-between items-center p-3 border-b dark:border-gray-700">
                 <div className="flex items-center gap-2">
                     <h3 className="font-medium text-gray-800 dark:text-white">Notifications</h3>
@@ -113,7 +104,6 @@ const NotificationDropdown = ({ isOpen, notifications, setNotifications, unreadC
                 </div>
             </div>
 
-            {/* Filter tabs */}
             <div className="flex flex-col border-b dark:border-gray-700 p-2 bg-gray-50 dark:bg-gray-800/40">
                 <div className="flex items-center gap-1 mb-2 overflow-x-auto pb-1 scrollbar-hide">
                     <span className="ml-1 text-gray-500 dark:text-gray-400">
@@ -153,7 +143,6 @@ const NotificationDropdown = ({ isOpen, notifications, setNotifications, unreadC
                 </div>
             </div>
 
-            {/* Notification list */}
             <div className="max-h-[25rem] overflow-y-auto">
                 {filteredNotifications.length > 0 ? (
                     <div>
@@ -191,7 +180,6 @@ const NotificationDropdown = ({ isOpen, notifications, setNotifications, unreadC
 
                                         <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{notification.message}</p>
 
-                                        {/* Interactive buttons */}
                                         <div className="flex justify-between mt-2">
                                             <div className="flex gap-1">
                                                 {notification.category === 'comment' && (
@@ -241,7 +229,6 @@ const NotificationDropdown = ({ isOpen, notifications, setNotifications, unreadC
                 )}
             </div>
 
-            {/* Footer */}
             <div className="p-3 text-center border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-800/30">
                 <Link to="/notifications" className="text-sm text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
                     View all notifications
