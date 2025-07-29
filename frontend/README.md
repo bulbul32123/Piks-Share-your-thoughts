@@ -60,3 +60,11 @@
 ```bash
 git clone https://github.com/bulbul32123/Piks-Share-your-thoughts
 cd piks
+
+# Run frontend 
+cd frontend
+npm run dev
+
+# To Run Backend
+cd backend
+npm run dev
