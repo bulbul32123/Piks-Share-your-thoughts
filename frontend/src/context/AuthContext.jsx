@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    // Check if user is logged in on initial load
     useEffect(() => {
         const checkUserLoggedIn = async () => {
             setLoading(true);
@@ -32,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         checkUserLoggedIn();
     }, []);
 
-    // Register user
     const signup = async (userData) => {
         try {
             setLoading(true);
@@ -53,7 +51,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Login user
     const login = async (email, password) => {
         try {
             setLoading(true);
@@ -78,7 +75,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Logout user
     const logout = async () => {
         try {
             setLoading(true);
@@ -99,7 +95,6 @@ export const AuthProvider = ({ children }) => {
     }
 }
 
-    // Update user profile
     const updateProfile = async (userData) => {
         try {
             setLoading(true);
@@ -136,7 +131,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Forgot password
     const forgotPassword = async (email) => {
         try {
             setLoading(true);
@@ -156,7 +150,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Reset password
     const resetPassword = async (token, password) => {
         try {
             setLoading(true);
@@ -179,7 +172,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Verify email
     const verifyEmail = async (token) => {
         try {
             setLoading(true);

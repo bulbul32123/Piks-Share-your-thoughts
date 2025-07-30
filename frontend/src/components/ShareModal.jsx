@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { MdShare, MdContentCopy, MdCheck } from 'react-icons/md';
+import { useState, useEffect } from 'react';
+import { MdContentCopy, MdCheck } from 'react-icons/md';
 import { FaFacebook, FaTwitter, FaWhatsapp, FaTelegram } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import { useClickOutside } from '../hooks/useClickOutside';
@@ -10,7 +10,6 @@ export default function ShareModal({ isOpen, onClose, postUrl }) {
     const modalRef = useClickOutside(onClose, isOpen);
     usePreventScroll(isOpen);
 
-    // Calculate scrollbar width on mount
     useEffect(() => {
         if (isOpen) {
             const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -76,7 +75,6 @@ export default function ShareModal({ isOpen, onClose, postUrl }) {
                 onClick={(e) => e.stopPropagation()}
                 data-modal="share-content"
             >
-                {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
                     <h2 className="text-xl font-semibold dark:text-gray-200">Share</h2>
                     <button
@@ -90,9 +88,7 @@ export default function ShareModal({ isOpen, onClose, postUrl }) {
                     </button>
                 </div>
 
-                {/* Content */}
                 <div className="p-4">
-                    {/* Share Options */}
                     <div className="grid grid-cols-4 gap-3 mb-6">
                         {shareOptions.map((option, index) => (
                             <button
@@ -108,8 +104,6 @@ export default function ShareModal({ isOpen, onClose, postUrl }) {
                             </button>
                         ))}
                     </div>
-
-                    {/* Copy Link Section */}
                     <div className="flex items-center gap-2 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
                         <input
                             type="text"
