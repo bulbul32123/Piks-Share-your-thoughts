@@ -20,7 +20,6 @@ const DOBInput = () => {
         <div>
             <label className="block text-sm font-medium">Date of Birth</label>
             <div className="flex gap-3 mt-2">
-                {/* Month Dropdown */}
                 <div className="relative w-1/3">
                     <select
                         name="month"
@@ -34,11 +33,9 @@ const DOBInput = () => {
                         ))}
                     </select>
 
-                    {/* Custom Arrow Icon */}
                     <DownArrow />
                 </div>
 
-                {/* Day Dropdown */}
                 <div className="relative w-1/3">
                     <select
                         name="day"
@@ -52,11 +49,9 @@ const DOBInput = () => {
                         ))}
                     </select>
 
-                    {/* Custom Arrow Icon */}
                     <DownArrow />
                 </div>
 
-                {/* Year Dropdown */}
                 <div className="relative w-1/3">
                     <select
                         name="years"
@@ -70,7 +65,6 @@ const DOBInput = () => {
                         ))}
                     </select>
 
-                    {/* Custom Arrow Icon */}
                     <DownArrow />
                 </div>
             </div>

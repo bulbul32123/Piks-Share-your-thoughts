@@ -7,7 +7,6 @@ export default function CommentBox({ comment, handleCommentChange, handleComment
     const emojiButtonRef = useRef(null);
     const emojiPickerRef = useRef(null);
 
-    // Handle emoji selection
     const handleEmojiSelect = (emojiObject) => {
         const textarea = textareaRef.current;
         const start = textarea.selectionStart;
@@ -15,10 +14,8 @@ export default function CommentBox({ comment, handleCommentChange, handleComment
         const text = textarea.value;
         const newText = text.substring(0, start) + emojiObject.emoji + text.substring(end);
 
-        // Update the textarea value directly
         textarea.value = newText;
 
-        // Trigger the onChange event manually
         const event = {
             target: {
                 value: newText
@@ -26,14 +23,12 @@ export default function CommentBox({ comment, handleCommentChange, handleComment
         };
         handleCommentChange(event);
 
-        // Set cursor position after emoji
         setTimeout(() => {
             textarea.selectionStart = textarea.selectionEnd = start + emojiObject.emoji.length;
             textarea.focus();
         }, 0);
     };
 
-    // Handle clicking outside emoji picker
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (emojiPickerRef.current &&

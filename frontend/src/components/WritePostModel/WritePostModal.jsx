@@ -37,7 +37,6 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
   const [scheduledTime, setScheduledTime] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
-  // AI chat feature states
   const [aiQuestion, setAiQuestion] = useState('');
 
   const fileInputRef = useRef(null);
@@ -46,22 +45,18 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
   const emojiPickerRef = useRef(null);
 
 
-  // Preview images
   const filePreviewUrls = selectedFiles.map(file => URL.createObjectURL(file));
 
-  // Auto-resize textarea function
   const autoResizeTextarea = () => {
     if (textareaRef.current) {
-      // Reset height to auto to get the correct scrollHeight
       textareaRef.current.style.height = 'auto';
-      // Set the height based on content
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault(); // Prevent newline in textarea
+      event.preventDefault(); 
 
       const trimmedText = postText.trim();
       if (trimmedText.startsWith("#AI")) {
@@ -81,23 +76,19 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
 
 
 
-  // Insert AI response into textarea
   const insertAiResponse = () => {
     if (!aiResponse) return;
     console.log("Inserting AI response:", aiResponse);
 
-    // Replace the #Ai command with the response
     const newText = postText.replace(/#Ai\s+.+$/, aiResponse);
     setPostText(newText);
 
-    // Reset AI states
     setAiQuestion('');
     setAiResponse('');
     setShowAiResponse(false);
   };
 
 
-  // Handle emoji selection
   const onEmojiClick = (emojiData) => {
     if (textareaRef.current) {
       const emoji = emojiData.emoji;
@@ -107,18 +98,15 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
       const newText = postText.substring(0, start) + emoji + postText.substring(end);
       setPostText(newText);
 
-      // Set cursor position after emoji
       setTimeout(() => {
         textarea.focus();
         textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
       }, 0);
     } else {
-      // If textarea ref not available, append to the end
       setPostText(prev => prev + emojiData.emoji);
     }
   };
 
-  // Close emoji picker when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target) &&
@@ -134,22 +122,14 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
   }, [showFormatting]);
 
 
-  // In your main effect that watches postText, call the debounced function
   useEffect(() => {
-    // Update character count
     setCharacterCount(postText.length);
-
-    // Auto-resize textarea when content changes
     autoResizeTextarea();
 
-    // Use debounced check for AI command
-
-    // Extract hashtags from text
     const regex = /#(\w+)/g;
     const matches = postText.match(regex) || [];
     setHashtags(matches);
 
-    // Setup drag and drop
     const dragArea = dragAreaRef.current;
     if (dragArea) {
       const handleDragOver = (e) => {
@@ -186,10 +166,8 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
     }
   }, [postText]);
 
-  // Initialize textarea height on mount
   useEffect(() => {
     if (isOpen && textareaRef.current) {
-      // Set a small delay to ensure the textarea is rendered
       setTimeout(() => {
         autoResizeTextarea();
       }, 0);
@@ -208,7 +186,6 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
   };
 
   const handleSubmit = () => {
-    // Gather all data for the post
     const postData = {
       text: postText,
       privacy: privacy,
@@ -218,10 +195,7 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
       scheduledTime: scheduledTime || null
     };
 
-    // Here you would send the data to your backend
-    console.log('Post data:', postData);
 
-    // Reset form
     setPostText('');
     setSelectedFiles([]);
     setPrivacy('public');
@@ -232,7 +206,6 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
     setAiResponse('');
     setShowAiResponse(false);
 
-    // Close modal
     onClose();
   };
 
@@ -247,16 +220,13 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
   return (
     <div className="fixed inset-0 bg-gray-500/40 flex items-center justify-center z-50 p-4 overflow-hidden ">
       <div className="bg-white relative dark:bg-black rounded-xl shadow-xl w-full max-w-xl max-h-[80vh] flex flex-col animate-scale-in my-8" ref={ref}>
-        {/* Header */}
         <PostModelHeader onClose={onClose} />
 
-        {/* User info */}
         <div className="px-4 py-1 flex items-center gap-3">
           <img src="/pic.jpg" className="w-10 h-10 rounded-full" alt="User" />
           <div className="flex-1">
             <p className="font-medium dark:text-white">John Doe</p>
 
-            {/* Privacy selector */}
             <div className="relative">
               <button
                 onClick={() => setShowPrivacyOptions(!showPrivacyOptions)}
@@ -272,7 +242,6 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
             </div>
           </div>
 
-          {/* Schedule post */}
           <button
             onClick={() => setShowSchedule(!showSchedule)}
             className={`p-2 rounded-full transition ${scheduledTime ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400' : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400'}`}
@@ -281,22 +250,17 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
             <FaRegCalendarAlt size={18} />
           </button>
         </div>
-
-        {/* Schedule selector */}
         {showSchedule && (
           <ScheduleSelector scheduledTime={scheduledTime} setScheduledTime={setScheduledTime} />
         )}
 
-        {/* Main scrollable content area */}
         <div className="flex-1 overflow-hidden flex flex-col min-h-0">
           <div ref={dragAreaRef} className={`px-4 pt-2 transition-colors flex-1 overflow-hidden flex flex-col`}>
             <div
               className={`rounded-lg ${selectedBgColor.color ? 'p-3' : 'p-1'} flex-1 overflow-hidden flex flex-col !text-[#000000]`}
               style={{ backgroundColor: selectedBgColor.color }}
             >
-              {/* Single scrollable container for both text and images */}
               <div className="flex-1 overflow-y-auto">
-                {/* Auto-expanding textarea */}
                 <textarea
                   ref={textareaRef}
                   placeholder="What's on your mind, John? Try typing #Ai followed by a question!"
@@ -309,7 +273,6 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
                   style={{ minHeight: '50px', overflow: 'hidden', color: selectedBgColor.text }}
                 />
 
-                {/* AI Response UI */}
                 {showAiResponse && (
                   <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                     <div className="flex items-center gap-2 mb-2">
@@ -340,7 +303,6 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
                   </div>
                 )}
 
-                {/* AI Helper Tip - only show when no AI response is being displayed */}
                 {!showAiResponse && !aiQuestion && (
                   <div className="mt-2 text-center py-2 text-xs text-blue-500 dark:text-blue-400 italic flex items-center justify-center gap-1">
                     <FaRobot size={14} />
@@ -348,12 +310,10 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
                   </div>
                 )}
 
-                {/* Image previews directly below text */}
                 {filePreviewUrls.length > 0 && (
                   <ImagePreviews filePreviewUrls={filePreviewUrls} removeFile={removeFile} />
                 )}
 
-                {/* Drag & drop area */}
                 {filePreviewUrls.length === 0 && !showAiResponse && (
                   <div className="mt-2 text-center py-2 text-xs text-gray-500 dark:text-gray-400 italic">
                     Drag and drop images here
@@ -363,9 +323,7 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
             </div>
           </div>
 
-          {/* Hashtags - Outside the scrollable area */}
           <div className="px-4 pb-2 flex justify-end items-start">
-            {/* Character count */}
             <div className="flex justify-end">
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 {characterCount}/{MAX_CHARS}
@@ -380,7 +338,6 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
           </div>
         </div>
 
-        {/* Emoji picker */}
         {showFormatting && (
           <div className="px-4 pb-2 absolute bottom-24 -right-6" ref={emojiPickerRef}>
             <div className="emoji-picker-container relative">
@@ -391,8 +348,8 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
                 searchPlaceHolder="Search emojis..."
                 width=""
                 height="20rem"
-                searchDisabled={true} // Disable search bar
-                skinTonesDisabled={true} // Disable skin tone selection if not needed
+                searchDisabled={true} 
+                skinTonesDisabled={true} 
                 suggestedEmojisMode={false}
                 theme={document.documentElement.classList.contains('dark') ? 'dark' : 'light'}
                 emojiStyle="facebook"
@@ -401,15 +358,12 @@ const WritePostModal = ({ isOpen, onClose, aiResponse, setAiResponse, setShowAiR
           </div>
         )}
 
-        {/* Color picker */}
         {showColorPicker && (
           <ColorPicker setSelectedBgColor={setSelectedBgColor} setShowColorPicker={setShowColorPicker} selectedBgColor={selectedBgColor} bgColors={bgColors} />
         )}
 
-        {/* Add to post options */}
         <PostOptions fileInputRef={fileInputRef} handleFileSelect={handleFileSelect} setShowFormatting={setShowFormatting} showFormatting={showFormatting} setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} setPostText={setPostText} postText={postText} textareaRef={textareaRef} />
 
-        {/* Post button */}
         <div className="px-4 pb-3">
           <button
             onClick={handleSubmit}

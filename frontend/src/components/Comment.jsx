@@ -6,12 +6,10 @@ import { useState } from "react";
 export default function Comment({ comment }) {
     const [showReplies, setShowReplies] = useState(false);
 
-    // Mock replies data (you can replace this with actual replies data)
 
 
     return (
         <div className="flex flex-col">
-            {/* Main Comment */}
             <div className="flex gap-2">
                 <img
                     src={comment.profilePic}
@@ -38,7 +36,6 @@ export default function Comment({ comment }) {
                 </div>
             </div>
 
-            {/* Replies Section with Tree Structure */}
             {comment.replies && comment.replies.length > 0 && (
                 <div className="ml-5 mt-2">
                     <button
@@ -53,16 +50,13 @@ export default function Comment({ comment }) {
                         {comment.replies.length} {comment.replies.length === 1 ? 'reply' : 'replies'}
                     </button>
 
-                    {/* Replies List with Tree Lines */}
                     {showReplies && (
                         <div className="flex flex-col">
                             {comment.replies.map((reply, index) => (
                                 <div key={reply.id} className="relative">
-                                    {/* Tree Line Structure */}
                                     <div className="absolute left-0 top-3 -translate-y-full h-full border-l-2 border-gray-300 dark:border-gray-700"></div>
                                     <div className="absolute left-0 top-4 w-8 border-t-2 border-gray-300 dark:border-gray-700"></div>
 
-                                    {/* Reply Content */}
                                     <div className="flex gap-3 ml-11 mb-2">
                                         <img
                                             src={reply.profilePic}
@@ -89,7 +83,6 @@ export default function Comment({ comment }) {
                                         </div>
                                     </div>
 
-                                    {/* Last item doesn't need full height line */}
                                     {index === comment.replies.length - 1 && (
                                         <div className="absolute left-0 -top-1 h-5 border-l-2 border-gray-300 dark:border-gray-700"></div>
                                     )}

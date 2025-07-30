@@ -35,14 +35,12 @@ const ProfileEdit = ({ setIsEditProfileModalOpen, isEditProfileModalOpen }) => {
     }
   };
 
-  // Function to remove images
   const handleRemoveImage = (imageType, inputRef) => {
     setFormData({
       ...formData,
       [imageType]: "",
     });
 
-    // Reset file input field
     inputRef.current.value = "";
   };
 
@@ -53,10 +51,8 @@ const ProfileEdit = ({ setIsEditProfileModalOpen, isEditProfileModalOpen }) => {
 
   return (
     <div className="flex justify-center items-center relative">
-      {/* Overlay */}
       <div className="fixed inset-0 z-[10] bg-gray-500/40 transition-opacity"></div>
 
-      {/* Modal */}
       <div
         className="w-full md:w-[40rem] fixed h-[80%]  overflow-hidden z-20 top-20 p-6 dark:bg-black dark:text-white rounded-lg shadow-xl"
         ref={useClickOutside(setIsEditProfileModalOpen, isEditProfileModalOpen)}
@@ -72,7 +68,7 @@ const ProfileEdit = ({ setIsEditProfileModalOpen, isEditProfileModalOpen }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6 pb-14 overflow-x-hidden h-[100%] scrollbar-hide w-full">
-          {/* Banner Image Upload */}
+   
           <div className="relative w-full h-[13.5rem] bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden">
             {formData.bannerImage ? (
               <>
@@ -81,7 +77,7 @@ const ProfileEdit = ({ setIsEditProfileModalOpen, isEditProfileModalOpen }) => {
                   alt="Banner"
                   className="w-full h-full object-cover"
                 />
-                {/* Remove Button */}
+             
                 <button
                   onClick={() => handleRemoveImage("bannerImage", bannerFileInput)}
                   className="absolute top-2 z-10 right-2 bg-black/60 p-1 rounded-full hover:bg-black/80 transition"
@@ -107,7 +103,6 @@ const ProfileEdit = ({ setIsEditProfileModalOpen, isEditProfileModalOpen }) => {
             </label>
           </div>
 
-          {/* Profile Picture Upload */}
           <div className="relative w-32 h-32 !mt-[-3rem] mx-auto rounded-full border-4 border-black dark:border-gray-900 bg-gray-200 dark:bg-gray-800 overflow-hidden">
             {formData.userImage ? (
               <>
@@ -116,7 +111,6 @@ const ProfileEdit = ({ setIsEditProfileModalOpen, isEditProfileModalOpen }) => {
                   alt="Avatar"
                   className="w-full h-full object-cover"
                 />
-                {/* Remove Button */}
                 <button
                   onClick={() => handleRemoveImage("userImage", avatarFileInput)}
                   className="absolute top-5 z-10 right-2 bg-black/60 p-1 rounded-full hover:bg-black/80 transition"
@@ -142,7 +136,6 @@ const ProfileEdit = ({ setIsEditProfileModalOpen, isEditProfileModalOpen }) => {
             </label>
           </div>
 
-          {/* Input Fields */}
           <div className="!-mt-3">
             <label className="block text-sm font-medium">Username</label>
             <input
@@ -166,7 +159,6 @@ const ProfileEdit = ({ setIsEditProfileModalOpen, isEditProfileModalOpen }) => {
             />
           </div>
 
-          {/* Date of Birth Input */}
           <DOBInput />
 
           <div>
