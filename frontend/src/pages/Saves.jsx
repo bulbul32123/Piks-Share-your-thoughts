@@ -3,7 +3,7 @@
 export default function Saves() {
   return (
     <div>
-      Saves
+      Saves page
     </div>
   )
 }

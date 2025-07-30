@@ -3,7 +3,7 @@
 export default function PostDetail() {
     return (
         <div>
-            PostDetail
+            PostDetail page
         </div>
     )
 }

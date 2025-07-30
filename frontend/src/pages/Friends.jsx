@@ -3,7 +3,7 @@
 export default function Friends() {
   return (
     <div>
-      Friends
+      Friends page
     </div>
   )
 }

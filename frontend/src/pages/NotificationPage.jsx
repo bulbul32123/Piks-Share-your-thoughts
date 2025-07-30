@@ -2,7 +2,7 @@
 export default function NotificationPage() {
   return (
     <div className="Layout">
-      NotificationPage
+      Notification Page
     </div>
   )
 }
