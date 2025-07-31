@@ -22,7 +22,6 @@ router.post('/logout', logout);
 // router.post('/forgot-password', forgotPassword);
 // router.put('/reset-password/:token', resetPassword);
 
-// Protected routes
 router.get('/me', protect, CheckAuth);
 // router.put('/update-profile', protect, updateProfile);
 

@@ -1,5 +1,4 @@
 const { connectToDB } = require('./db/ConnectToDB');
-// const uploadRoutes = require('./routes/upload');
 const cookieParser = require("cookie-parser");
 const authRoutes = require('./routes/auth');
 const express = require('express');
@@ -10,15 +9,9 @@ const fs = require('fs');
 
 dotenv.config();
 
-// Connect to MongoDB
 connectToDB();
-
-
-
-// Initialize express app
 const app = express();
 const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
-// Connect frontend and backend
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -29,16 +22,13 @@ app.use(cors({
     },
     credentials: true
 }));        
-// middlewares 
 app.use(express.json());
 app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 
-// Static folder for uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Ensure uploads directory exists
 const uploadsDir = path.join(__dirname, 'uploads');
 
 if (!fs.existsSync(uploadsDir)) {
@@ -46,16 +36,9 @@ if (!fs.existsSync(uploadsDir)) {
     console.log('Created uploads directory at:', uploadsDir);
 }
 
-// ** Main Routes ** //
 
 app.use('/api/auth', authRoutes);
 
-// ** End of Main Routes ** //
-
-
-// app.use('/api/upload', uploadRoutes);
-
-// API Test route
 app.get('/api/users', (req, res) => {
     return res.json([
         {
@@ -213,8 +196,6 @@ Here's a quick rundown of what's worth knowing about Next.js:
     ]);
 });
 
-
-// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`)

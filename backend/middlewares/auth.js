@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Protect routes - only authenticated users can access
 const protect = async (req, res, next) => {
   const { token } = req.cookies;
   if (!token) {
@@ -9,10 +8,8 @@ const protect = async (req, res, next) => {
   }
 
   try {
-    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Find user by id
     req.user = await User.findById(decoded.id).select('-password');
 
     if (!req.user) {
