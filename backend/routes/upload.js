@@ -7,14 +7,12 @@ const { protect, admin } = require('../middlewares/auth');
 const { uploadImage } = require('../controllers/uploadController');
 const cloudinary = require('cloudinary').v2;
 
-// Ensure uploads directory exists
 const uploadsDir = path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
   console.log('Created uploads directory');
 }
 
-// Configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadsDir);
@@ -32,16 +30,14 @@ const fileFilter = (req, file, cb) => {
     'image/jpg',
     'image/png',
     'image/webp',
-    'image/gif'  // Also including GIF for completeness
+    'image/gif'  
   ];
 
-  // Log the incoming file type for debugging
   console.log(`Received file: ${file.originalname}, type: ${file.mimetype}`);
 
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    // Check for common filename extensions as a fallback
     const ext = file.originalname.split('.').pop().toLowerCase();
     if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) {
       console.log(`Accepting file based on extension: ${ext}`);
