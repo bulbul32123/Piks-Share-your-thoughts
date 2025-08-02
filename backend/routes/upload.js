@@ -108,7 +108,6 @@ router.get('/test-cloudinary', async (req, res) => {
 
     cloudinary.config(testConfig);
 
-    // Try a simple API call to verify credentials
     const result = await cloudinary.api.ping();
 
     res.status(200).json({
@@ -124,16 +123,13 @@ router.get('/test-cloudinary', async (req, res) => {
   }
 });
 
-// Add this route to your upload.js file
 router.get('/health', async (req, res) => {
   try {
-    // Check if uploads directory exists and is writable
     const uploadsDir = path.join(__dirname, '../uploads');
     let dirStatus = 'missing';
 
     if (fs.existsSync(uploadsDir)) {
       dirStatus = 'exists';
-      // Try to write a test file
       const testFile = path.join(uploadsDir, `test-${Date.now()}.txt`);
       try {
         fs.writeFileSync(testFile, 'Test file');
@@ -144,7 +140,6 @@ router.get('/health', async (req, res) => {
       }
     }
 
-    // Check Cloudinary connection
     cloudinary.config({
       cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
       api_key: process.env.CLOUDINARY_API_KEY,
@@ -159,7 +154,6 @@ router.get('/health', async (req, res) => {
       cloudinaryStatus = 'error: ' + cloudinaryError.message;
     }
 
-    // Return the health status
     res.status(200).json({
       service: 'Upload service',
       status: 'online',
