@@ -23,7 +23,6 @@ const storage = multer.diskStorage({
   }
 });
 
-// Filter for allowed file types
 const fileFilter = (req, file, cb) => {
   const allowedTypes = [
     'image/jpeg',
@@ -48,14 +47,12 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Configure multer for disk storage
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }, 
   fileFilter: fileFilter
 });
 
-// Error handling middleware for multer
 const handleMulterError = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     if (err.code === 'LIMIT_FILE_SIZE') {
@@ -68,9 +65,7 @@ const handleMulterError = (err, req, res, next) => {
   next();
 };
 
-// Regular upload route
 router.post('/', protect, admin, (req, res, next) => {
-  // Check if it's a webp file to use the direct method
   const isWebp = req.headers['content-type'] &&
     req.headers['content-type'].includes('webp');
 
@@ -80,7 +75,7 @@ router.post('/', protect, admin, (req, res, next) => {
   });
 
   if (isWebp) {
-    // For webp files, use the direct method
+
     upload.single('image')(req, res, (err) => {
       if (err) {
         console.error('Multer error (disk):', err);
@@ -89,7 +84,6 @@ router.post('/', protect, admin, (req, res, next) => {
       next();
     });
   } else {
-    // For other files, use the regular method
     upload.single('image')(req, res, (err) => {
       if (err) {
         console.error('Multer error (disk):', err);
@@ -100,10 +94,6 @@ router.post('/', protect, admin, (req, res, next) => {
   }
 }, uploadImage);
 
-// Delete image route
-// router.delete('/:public_id', protect, admin, deleteProductImage);
-
-// Add this test route to your upload.js routes file
 router.get('/test-cloudinary', async (req, res) => {
   try {
     const testConfig = {
@@ -111,8 +101,6 @@ router.get('/test-cloudinary', async (req, res) => {
       api_key: process.env.CLOUDINARY_API_KEY,
       api_secret: process.env.CLOUDINARY_API_SECRET
     };
-
-    // Create a sanitized version without the API secret for logging
     const sanitizedConfig = { ...testConfig };
     delete sanitizedConfig.api_secret;
 
